@@ -3418,30 +3418,129 @@ async function SOCKS5可用性验证(代理协议 = 'socks5', 代理参数) {
 async function nginx() {
 	return `
 	<!DOCTYPE html>
-	<html>
-	<head>
-	<title>Welcome to nginx!</title>
-	<style>
-		body {
-			width: 35em;
-			margin: 0 auto;
-			font-family: Tahoma, Verdana, Arial, sans-serif;
-		}
-	</style>
-	</head>
-	<body>
-	<h1>Welcome to nginx!</h1>
-	<p>If you see this page, the nginx web server is successfully installed and
-	working. Further configuration is required.</p>
-	
-	<p>For online documentation and support please refer to
-	<a href="http://nginx.org/">nginx.org</a>.<br/>
-	Commercial support is available at
-	<a href="http://nginx.com/">nginx.com</a>.</p>
-	
-	<p><em>Thank you for using nginx.</em></p>
-	</body>
-	</html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web File Browser</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">FB</div>
+        <div>
+          <h1>Web File Browser</h1>
+          <p>filebrowser--简易轻量文件上传下载管理器</p>
+        </div>
+      </div>
+
+      <section id="loginPanel" class="panel">
+        <h2>登录</h2>
+        <form id="loginForm" class="stack">
+          <input id="username" name="username" placeholder="用户名" autocomplete="username">
+          <input id="password" name="password" type="password" placeholder="密码" autocomplete="current-password">
+          <button type="submit">进入文件管理器</button>
+        </form>
+      </section>
+
+      <section id="userPanel" class="panel hidden">
+        <div class="user-meta">
+          <strong id="currentUser"></strong>
+          <span id="currentRole"></span>
+        </div>
+        <div id="permissionBadges" class="permission-badges"></div>
+        <div class="stack">
+          <button id="refreshBtn" class="ghost">刷新当前目录</button>
+          <button id="changeMyPasswordBtn" class="ghost">修改我的密码</button>
+          <button id="logoutBtn" class="ghost">退出登录</button>
+        </div>
+      </section>
+
+      <section id="userAdminPanel" class="panel hidden">
+        <h2>用户管理</h2>
+        <form id="userForm" class="stack">
+          <input id="newUsername" name="newUsername" placeholder="新用户名">
+          <input id="newPassword" name="newPassword" type="password" placeholder="初始密码，至少6位">
+          <select id="newRole" name="newRole">
+            <option value="viewer">viewer</option>
+            <option value="editor">editor</option>
+            <option value="admin">admin</option>
+          </select>
+          <button type="submit">创建用户</button>
+        </form>
+        <div id="userList" class="user-list empty-list">管理员登录后显示用户列表</div>
+      </section>
+
+      <section class="panel tips">
+        <h2>支持能力</h2>
+        <ul>
+          <li>目录浏览与面包屑导航</li>
+          <li>多文件上传与单文件下载</li>
+          <li>创建目录、重命名、删除</li>
+          <li>图片与文本预览</li>
+          <li>用户、角色与权限管理</li>
+        </ul>
+      </section>
+    </aside>
+
+    <main id="workspace" class="workspace">
+      <header class="toolbar">
+        <div>
+          <p class="eyebrow">Workspace</p>
+          <h2>文件浏览器</h2>
+        </div>
+        <div class="actions">
+          <button id="newFolderBtn" class="ghost" disabled>新建文件夹</button>
+          <label class="upload-btn disabled" id="uploadLabel">
+            <input id="uploadInput" type="file" multiple disabled>
+            上传文件
+          </label>
+        </div>
+      </header>
+
+      <section class="pathbar">
+        <div id="breadcrumbs" class="breadcrumbs">请先登录</div>
+        <div id="status" class="status">等待操作</div>
+      </section>
+
+      <section class="content">
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>名称</th>
+                <th>类型</th>
+                <th>大小</th>
+                <th>修改时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="fileRows">
+              <tr>
+                <td colspan="5" class="empty">登录后显示文件列表</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="preview-card">
+          <div class="preview-head">
+            <h3>预览</h3>
+            <span id="previewName">尚未选择文件</span>
+          </div>
+          <div id="previewBody" class="preview-body empty">
+            选择图片或文本文件后会在这里显示预览。
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
 	`
 }
 
